@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.1
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 10 Des 2024 pada 09.04
--- Versi server: 10.4.21-MariaDB
--- Versi PHP: 8.0.11
+-- Waktu pembuatan: 13 Des 2024 pada 15.41
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,7 @@ CREATE TABLE `daftar_poli` (
   `id_jadwal` int(11) NOT NULL,
   `keluhan` text NOT NULL,
   `no_antrian` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -45,7 +45,7 @@ CREATE TABLE `detail_periksa` (
   `id` int(11) NOT NULL,
   `id_periksa` int(11) NOT NULL,
   `id_obat` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -61,16 +61,17 @@ CREATE TABLE `dokter` (
   `id_poli` int(11) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('dokter') NOT NULL DEFAULT 'dokter'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `dokter`
 --
 
 INSERT INTO `dokter` (`id`, `nama`, `alamat`, `no_hp`, `id_poli`, `password`, `role`) VALUES
-(13, 'Afla', 'Jl. Kedungmundu', '085712356789', 4, '86318e52f5ed4801abe1d13d509443de', 'dokter'),
-(14, 'Edho', 'Jl. Klipang', '0812345678765', 3, 'ce8960680ae335fceb9e0dab7648f824', 'dokter'),
-(15, 'Huda', 'Jl. Tembalang', '0898765432123', 1, 'e8978dfce11d4ecc73719cb35fb9fe51', 'dokter');
+(16, 'rahma', 'pusponjolo', '0987654654', 4, 'b007b7d6520a7b3dcccd2a1ec2891009', 'dokter'),
+(17, 'bagus', 'Semarang Timur', '08987654234', 5, '17b38fc02fd7e92f3edeb6318e3066d8', 'dokter'),
+(18, 'kinan', 'Semarang Barat', '0987654321', 6, '73136282658283a597fa0a2979fa2543', 'dokter'),
+(19, 'caca', 'Semarang Tengah', '0987654345678', 9, 'd2104a400c7f629a197f33bb33fe80c0', 'dokter');
 
 -- --------------------------------------------------------
 
@@ -84,7 +85,7 @@ CREATE TABLE `jadwal_periksa` (
   `hari` varchar(10) NOT NULL,
   `jam_mulai` time NOT NULL,
   `jam_selesai` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -97,7 +98,7 @@ CREATE TABLE `obat` (
   `nama_obat` varchar(50) NOT NULL,
   `kemasan` varchar(35) DEFAULT NULL,
   `harga` int(10) UNSIGNED DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `obat`
@@ -105,7 +106,9 @@ CREATE TABLE `obat` (
 
 INSERT INTO `obat` (`id`, `nama_obat`, `kemasan`, `harga`) VALUES
 (1, 'atorvastatin', 'kaplet', 100000),
-(2, 'Hemaviton', 'botol', 10000);
+(2, 'Hemaviton', 'botol', 10000),
+(3, 'antimo', 'tablet', 5000),
+(4, 'bodrex', 'tablet', 10000);
 
 -- --------------------------------------------------------
 
@@ -122,15 +125,17 @@ CREATE TABLE `pasien` (
   `no_rm` char(10) DEFAULT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('pasien') NOT NULL DEFAULT 'pasien'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `pasien`
 --
 
 INSERT INTO `pasien` (`id`, `nama`, `alamat`, `no_ktp`, `no_hp`, `no_rm`, `password`, `role`) VALUES
-(8, 'Idris', 'Jl. Telomoyo', '33740423020002', '085866125567', '202412-001', '14180f38f11db420937b98aa24fad581', 'pasien'),
-(9, 'Agus', 'Jl. Majapahit', '337312345670002', '08351273571', '202412-002', '202cb962ac59075b964b07152d234b70', 'pasien');
+(11, 'rahmadika', 'Semarang', '23456789', '09876543', '202412-001', '202cb962ac59075b964b07152d234b70', 'pasien'),
+(12, 'maman', 'tugumuda', '09876543', '3567890', '202412-002', '202cb962ac59075b964b07152d234b70', 'pasien'),
+(13, 'ecaa', 'smg', '98765', '345678', '202412-003', '202cb962ac59075b964b07152d234b70', 'pasien'),
+(14, 'dika', 'smg', '1234567', '0987654', '202412-004', '202cb962ac59075b964b07152d234b70', 'pasien');
 
 -- --------------------------------------------------------
 
@@ -144,7 +149,7 @@ CREATE TABLE `periksa` (
   `tgl_periksa` date NOT NULL,
   `catatan` text NOT NULL,
   `biaya_periksa` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -156,16 +161,18 @@ CREATE TABLE `poli` (
   `id` int(11) NOT NULL,
   `nama_poli` varchar(25) NOT NULL,
   `keterangan` text DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `poli`
 --
 
 INSERT INTO `poli` (`id`, `nama_poli`, `keterangan`) VALUES
-(1, 'Jantung', 'menangani keluhan pada masalah jantung'),
-(3, 'Paru Paru', 'menangani penyakit Paru Paru'),
-(4, 'Penyakit Dalam', 'menangani Penyakit Dalam');
+(4, 'Penyakit Dalam', 'menangani Penyakit Dalam'),
+(5, 'psikologi', 'menangani penyakit mental'),
+(6, 'gigi', 'menangani penyakit gigi'),
+(7, 'mata', 'menangani penyakit mata'),
+(9, 'tht', 'telinga');
 
 -- --------------------------------------------------------
 
@@ -178,7 +185,7 @@ CREATE TABLE `user` (
   `username` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` enum('admin') NOT NULL DEFAULT 'admin'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `user`
@@ -186,32 +193,6 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
 (17, 'admin', '$2y$10$gkO8W.IoB1nY.ggFIX3Lx.sIdzVZYAj3AlLq3tFp9Ygksvpiq1jZm', 'admin');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `user_dokter`
---
-
-CREATE TABLE `user_dokter` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('dokter') NOT NULL DEFAULT 'dokter'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `user_pasien`
---
-
-CREATE TABLE `user_pasien` (
-  `id` int(11) NOT NULL,
-  `username` varchar(50) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `role` enum('pasien') NOT NULL DEFAULT 'pasien'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -279,18 +260,6 @@ ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `user_dokter`
---
-ALTER TABLE `user_dokter`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `user_pasien`
---
-ALTER TABLE `user_pasien`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
@@ -310,7 +279,7 @@ ALTER TABLE `detail_periksa`
 -- AUTO_INCREMENT untuk tabel `dokter`
 --
 ALTER TABLE `dokter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT untuk tabel `jadwal_periksa`
@@ -322,13 +291,13 @@ ALTER TABLE `jadwal_periksa`
 -- AUTO_INCREMENT untuk tabel `obat`
 --
 ALTER TABLE `obat`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `pasien`
 --
 ALTER TABLE `pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `periksa`
@@ -340,25 +309,13 @@ ALTER TABLE `periksa`
 -- AUTO_INCREMENT untuk tabel `poli`
 --
 ALTER TABLE `poli`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT untuk tabel `user_dokter`
---
-ALTER TABLE `user_dokter`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT untuk tabel `user_pasien`
---
-ALTER TABLE `user_pasien`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
