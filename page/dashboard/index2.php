@@ -12,6 +12,7 @@ if (!isset($_SESSION['id_poli'])) {
     $_SESSION['id_poli'] = 1; // Example id_poli
 }
 
+
 $username = $_SESSION['username'];
 $id_poli = $_SESSION['id_poli'];
 

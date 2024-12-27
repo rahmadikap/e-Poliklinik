@@ -1,5 +1,5 @@
 <?php
-    require '../../config/koneksi.php';
+    require '../../koneksi.php';
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $no_rm = $_POST['no_rm'];
         $idJadwal = $_POST['jadwal'];

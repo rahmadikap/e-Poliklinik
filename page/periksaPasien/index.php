@@ -34,7 +34,7 @@
                             <tbody>
                                 <?php 
                                     $no = 1;
-                                    require 'config/koneksi.php';
+                                    require 'koneksi.php';
                                     $query = "SELECT pasien.nama, daftar_poli.keluhan, daftar_poli.status_periksa, daftar_poli.id FROM daftar_poli INNER JOIN pasien ON daftar_poli.id_pasien = pasien.id INNER JOIN jadwal_periksa ON daftar_poli.id_jadwal = jadwal_periksa.id INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id WHERE dokter.id = '$id_dokter'";
                                     $result = mysqli_query($mysqli,$query);
 
@@ -67,11 +67,11 @@
 
                                                         <?php
                                                             $idDaftarPoli = $data['id'];
-                                                            require 'config/koneksi.php';
+                                                            require 'koneksi.php';
                                                             $ambilDataPeriksa = mysqli_query($mysqli,"SELECT * FROM periksa INNER JOIN daftar_poli ON periksa.id_daftar_poli = daftar_poli.id WHERE daftar_poli.id = '$idDaftarPoli'");
                                                             $ambilData = mysqli_fetch_assoc($ambilDataPeriksa);
                                                         ?>
-                                                        <form action="pages/periksaPasien/editPeriksa.php"
+                                                        <form action="page/periksaPasien/editPeriksa.php"
                                                             method="post">
                                                             <input type="hidden" name="id"
                                                                 value="<?php echo $data['id'] ?>">
@@ -114,7 +114,7 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <!-- Form tambah data obat disini -->
-                                                        <form action="pages/periksaPasien/periksaPasien.php"
+                                                        <form action="page/periksaPasien/periksaPasien.php"
                                                             method="post">
                                                             <input type="hidden" name="id"
                                                                 value="<?php echo $data['id'] ?>">
@@ -141,7 +141,7 @@
                                                                     data-placeholder="Pilih Obat" style="width: 100%;"
                                                                     name="obat[]">
                                                                     <?php 
-                                                                        require 'config/koneksi.php';
+                                                                        require 'koneksi.php';
                                                                         $getObat = "SELECT * FROM obat";
                                                                         $queryObat = mysqli_query($mysqli,$getObat);
                                                                         while ($datas = mysqli_fetch_assoc($queryObat)) {

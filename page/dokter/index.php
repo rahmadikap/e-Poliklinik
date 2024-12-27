@@ -21,9 +21,9 @@
         <div class="row">
             <div class="col-12">
                 <div class="card">
+                    <?php if ($role==="admin"){?>
                     <div class="card-header">
                         <h3 class="card-title">Data Dokter</h3>
-
                         <div class="card-tools">
                             <button type="button" class="btn btn-sm btn-success float-right" data-toggle="modal"
                                 data-target="#addModal">
@@ -206,6 +206,89 @@
                             </tbody>
                         </table>
                     </div>
+                    <?php }
+                    else if ($role === "dokter") {
+                        $loggedInDoctorId = $_SESSION['id'];
+                        // Modify the query to only fetch the logged-in doctor's data
+                        $query = "SELECT dokter.id, dokter.nama, dokter.alamat, dokter.no_hp, poli.nama_poli ,dokter.password
+                                  FROM dokter 
+                                  INNER JOIN poli ON dokter.id_poli = poli.id 
+                                  WHERE dokter.id = '$loggedInDoctorId'"; // Filter by logged-in doctor's ID
+                        $result = mysqli_query($mysqli, $query);
+                    
+                        while ($data = mysqli_fetch_assoc($result)) {
+                            // Display the doctor's data
+                            ?>
+                            <tr>
+                            <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Nama Dokter</th>
+                                    <th>Alamat</th>
+                                    <th>No HP</th>
+                                    <th>Password</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <td><?php echo $data['nama'] ?></td>
+                                <td style="white-space: pre-line;"><?php echo $data['alamat'] ?></td>
+                                <td><?php echo $data['no_hp'] ?></td>
+                                <td><?php echo $data['password'] ?></td>
+                                <td>
+                                    <button type='button' class='btn btn-sm btn-warning edit-btn'
+                                        data-toggle="modal"
+                                        data-target="#editModal<?php echo $data['id'] ?>">Edit</button>
+                                </td>
+                                <!-- Modal Edit Data dokter -->
+                                <div class="modal fade" id="editModal<?php echo $data['id'] ?>" tabindex="-1"
+                                    role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addModalLabel">Edit Data Dokter</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                    aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Form edit data dokter disini -->
+                                                <form action="page/dokter/updateDokter.php" method="post">
+                                                    <input type="hidden" class="form-control" id="id" name="id"
+                                                        value="<?php echo $data['id'] ?>" required>
+                                                    <div class="form-group">
+                                                        <label for="nama">Nama dokter</label>
+                                                        <input type="text" class="form-control" id="nama"
+                                                            name="nama" value="<?php echo $data['nama'] ?>"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="alamat">Alamat</label>
+                                                        <textarea class="form-control" rows="3" id="alamat"
+                                                            name="alamat"><?php echo $data['alamat'] ?></textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="no_hp">No Hp</label>
+                                                        <input type="text" class="form-control" id="no_hp"
+                                                            name="no_hp" value="<?php echo $data['no_hp'] ?>"
+                                                            required>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="password">password</label>
+                                                        <input type="text" class="form-control" id="password"
+                                                            name="password" value="">
+                    
+                                                    </div>
+                                                    <button type="submit" class="btn btn-success">Simpan</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </tr>
+                            <?php } } ?>
                     <!-- /.card-body -->
                 </div>
                 <!-- /.card -->

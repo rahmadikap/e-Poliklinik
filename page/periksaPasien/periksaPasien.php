@@ -1,5 +1,5 @@
 <?php
-    require '../../config/koneksi.php';
+    require '../../koneksi.php';
     if ($_SERVER['REQUEST_METHOD'] == "POST") {
         $id = $_POST['id'];
         $tanggalPeriksa = $_POST['tanggal_periksa'];

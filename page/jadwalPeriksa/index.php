@@ -15,6 +15,7 @@
     </div><!-- /.container-fluid -->
 </div>
 <!-- /.content-header -->
+ 
 <!-- Main content -->
 <div class="content">
     <div class="container-fluid">
@@ -82,7 +83,7 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <?php
-                                                require 'config/koneksi.php';
+                                                require 'koneksi.php';
                                                 $cekJadwal = mysqli_query($mysqli,"SELECT * FROM dokter INNER JOIN poli ON dokter.id_poli = poli.id WHERE poli.id = '$id_poli'");
                                                 $getData = mysqli_fetch_assoc($cekJadwal);
                                             ?>
@@ -108,7 +109,7 @@
                                                     <tbody>
                                                         <?php
                                                                         $nomor = 1;
-                                                                        require 'config/koneksi.php';
+                                                                        require 'koneksi.php';
                                                                         $ambilDataJadwal = "SELECT jadwal_periksa.id, jadwal_periksa.id_dokter, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai, dokter.id AS idDokter, dokter.nama, dokter.alamat, dokter.no_hp, dokter.id_poli, poli.id AS idPoli, poli.nama_poli, poli.keterangan FROM jadwal_periksa INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE id_poli = '$id_poli'";
 
                                                                         $resultss = mysqli_query($mysqli, $ambilDataJadwal);
@@ -153,12 +154,13 @@
                                 <!-- TAMPILKAN DATA OBAT DI SINI -->
                                 <?php
                                 $no = 1;
-                            require 'config/koneksi.php';
+                            require 'koneksi.php';
                             $query = "SELECT jadwal_periksa.id, jadwal_periksa.id_dokter, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai, jadwal_periksa.aktif, dokter.id AS idDokter, dokter.nama, dokter.alamat, dokter.no_hp, dokter.id_poli, poli.id AS idPoli, poli.nama_poli, poli.keterangan FROM jadwal_periksa INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE id_poli = '$id_poli' AND dokter.id = '$id_dokter'";
                             $result = mysqli_query($mysqli, $query);
 
                             while ($data = mysqli_fetch_assoc($result)) {
-                                # code...  
+                                # code...
+                                    
                             ?>
                                 <tr>
                                     <td><?php echo $no++; ?></td>
@@ -169,16 +171,18 @@
                                     <td><?php echo $data['aktif'] ?></td>
                                     <td>
                                         <?php
-                                            require 'config/koneksi.php';
+                                            require 'koneksi.php';
                                             $cekJadwalPeriksa = "SELECT * FROM daftar_poli INNER JOIN jadwal_periksa ON daftar_poli.id_jadwal = jadwal_periksa.id WHERE jadwal_periksa.id_dokter = '$id_dokter' AND daftar_poli.status_periksa = '0'";
                                             $queryCekJadwal = mysqli_query($mysqli,$cekJadwalPeriksa);
                                             if (mysqli_num_rows($queryCekJadwal) > 0) {
-                                            
+                                              
                                         ?>
+
                                         <button type='button' class='btn btn-sm btn-warning edit-btn'
                                             data-toggle="modal" data-target="#editModal<?php echo $data['id'] ?>"
-                                            disabled>Edit</button>
+                                            >Edit</button>
                                         <?php } else { ?>
+
                                         <button type='button' class='btn btn-sm btn-warning edit-btn'
                                             data-toggle="modal" data-target="#editModal<?php echo $data['id'] ?>"
                                             <?php echo $data['id_dokter'] == $id_dokter ? '' : 'disabled'?>>Edit</button>
@@ -201,7 +205,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Form edit data obat disini -->
-                                                    <form action="pages/jadwalPeriksa/updateJadwal.php" method="post">
+                                                    <form action="page/jadwalPeriksa/updateJadwal.php" method="post">
                                                         <input type="hidden" class="form-control" id="id" name="id"
                                                             value="<?php echo $data['id'] ?>" required>
                                                         <div class="form-group">
@@ -262,7 +266,7 @@
                                                 </div>
                                                 <div class="modal-body">
                                                     <!-- Form edit data obat disini -->
-                                                    <form action="pages/obat/hapusObat.php" method="post">
+                                                    <form action="page/obat/hapusObat.php" method="post">
                                                         <input type="hidden" class="form-control" id="id" name="id"
                                                             value="<?php echo $data['id'] ?>" required>
                                                         <p>Apakah anda yakin untuk menghapus data jadwal?<span

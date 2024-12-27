@@ -1,11 +1,11 @@
 <?php
-include '../../config/koneksi.php';
+include '../../koneksi.php';
 session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Ambil nilai dari form
     $idPoli = $_SESSION['id_poli'];
-    $idDokter = $_SESSION['id'];
+    $id_dokter = $_SESSION['id'];
     $hari = $_POST["hari"];
     $jamMulai = $_POST["jamMulai"];
     $jamSelesai = $_POST["jamSelesai"];

@@ -118,6 +118,12 @@
                                     <p>Riwayat Pasien <span class="right badge badge-success">Dokter</span></p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a href="dokter.php" class="nav-link">
+                                    <i class="fas fa-user-nurse nav-icon"></i>
+                                    <p>Setting <span class="right badge badge-success">Dokter</span></p>
+                                </a>
+                            </li>
                         </ul>
                     <?php } 
                     else if ($role === "pasien") { ?>

@@ -23,7 +23,7 @@
                     <h3 class="card-title">Daftar Poli</h3>
                 </div>
                 <div class="card-body">
-                    <form action="pages/daftarPoli/daftarPoli.php" method="post">
+                    <form action="page/daftarPoli/daftarPoli.php" method="post">
                         <div class="form-group mb-3">
                             <label for="no_rm font-weight-bold">No Rekam Medis</label>
                             <input type="text" class="form-control" name="no_rm"
@@ -32,16 +32,23 @@
                         <div class="form-group">
                             <label for="poli">Pilih Poli</label>
                             <select class="form-control" id="poli" name="poli" required>
-                            <option value="" disabled selected>Pilih Poli</option>
+                                <option value="" disabled selected>Pilih Poli</option>
                                 <?php
-                                require 'config/koneksi.php';
+                                require 'koneksi.php';
+                                // Ambil data poli dari database
                                 $query = "SELECT * FROM poli";
-                                $result = mysqli_query($mysqli,$query);
-                                while ($dataPoli = mysqli_fetch_assoc($result)) {
-                            ?>
-                                <option value="<?php echo $dataPoli['id'] ?>">
-                                    <?php echo $dataPoli['nama_poli'] ?></option>
-                                <?php } ?>
+                                $result = mysqli_query($mysqli, $query);
+
+                                // Cek apakah query berhasil
+                                if (!$result) {
+                                    echo "Error: " . mysqli_error($mysqli);
+                                } else {
+                                    // Loop melalui hasil dan tampilkan dalam dropdown
+                                    while ($dataPoli = mysqli_fetch_assoc($result)) {
+                                        echo '<option value="' . $dataPoli['id'] . '">' . $dataPoli['nama_poli'] . '</option>';
+                                    }
+                                }
+                                ?>
                             </select>
                         </div>
                         <div class="form-group mb-3">
@@ -86,7 +93,7 @@
 
                             <!-- TAMPILKAN DATA OBAT DI SINI -->
                             <?php
-                            require 'config/koneksi.php';
+                            require 'koneksi.php';
                             $no = 1;
                             $query = "SELECT daftar_poli.id as idDaftarPoli, poli.nama_poli, dokter.nama, jadwal_periksa.hari, jadwal_periksa.jam_mulai, jadwal_periksa.jam_selesai, daftar_poli.no_antrian FROM daftar_poli INNER JOIN jadwal_periksa ON daftar_poli.id_jadwal = jadwal_periksa.id INNER JOIN dokter ON jadwal_periksa.id_dokter = dokter.id INNER JOIN poli ON dokter.id_poli = poli.id WHERE daftar_poli.id_pasien = '$idPasien'";
                             $result = mysqli_query($mysqli, $query);
